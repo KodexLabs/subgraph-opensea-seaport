@@ -1,13 +1,14 @@
 {
-    "name": "seaport",
+    "name": "subgraph-opensea-seaport",
     "license": "",
     "scripts": {
         "codegen": "graph codegen",
         "build": "graph build",
-        "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ akihokurino/seaport",
-        "create-local": "graph create --node http://localhost:8020/ akihokurino/seaport",
-        "remove-local": "graph remove --node http://localhost:8020/ akihokurino/seaport",
-        "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 akihokurino/seaport"
+        "build:mainnet": "graph build --network mainnet",
+        "create:local": "graph create --node http://localhost:8020/ kodexlabs/seaport",
+        "deploy:ethereum:mainnet": "graph deploy --product hosted-service kodexlabs/seaport-mainnet",
+        "deploy:local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 kodexlabs/seaport",
+        "remove:local": "graph remove --node http://localhost:8020/ kodexlabs/seaport"
     },
     "dependencies": {
         "@graphprotocol/graph-cli": "0.30.4",

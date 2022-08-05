@@ -1,16 +1,17 @@
-specVersion: 0.0.4
+specVersion: 0.0.6
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
     name: Seaport
-    network: rinkeby
+    network: mainnet
     source:
-      address: "0x00000000006c3852cbEf3e08E8dF289169EdE581"
       abi: Seaport
+      address: "0x00000000006c3852cbEf3e08E8dF289169EdE581"
+      startBlock: 14946474
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - CounterIncremented
@@ -25,7 +26,8 @@ dataSources:
           handler: handleCounterIncremented
         - event: OrderCancelled(bytes32,indexed address,indexed address)
           handler: handleOrderCancelled
-        - event: OrderFulfilled(bytes32,indexed address,indexed address,address,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256,address)[])
+        - event: OrderFulfilled(bytes32,indexed address,indexed
+            address,address,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256,address)[])
           handler: handleOrderFulfilled
         - event: OrderValidated(bytes32,indexed address,indexed address)
           handler: handleOrderValidated
