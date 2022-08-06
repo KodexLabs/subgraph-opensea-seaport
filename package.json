@@ -8,10 +8,14 @@
         "create:local": "graph create --node http://localhost:8020/ kodexlabs/seaport",
         "deploy:ethereum:mainnet": "graph deploy --product hosted-service kodexlabs/seaport-mainnet",
         "deploy:local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 kodexlabs/seaport",
-        "remove:local": "graph remove --node http://localhost:8020/ kodexlabs/seaport"
+        "remove:local": "graph remove --node http://localhost:8020/ kodexlabs/seaport",
+        "test": "graph test"
     },
     "dependencies": {
         "@graphprotocol/graph-cli": "0.30.4",
         "@graphprotocol/graph-ts": "0.27.0"
+    },
+    "devDependencies": {
+        "matchstick-as": "^0.5.0"
     }
 }
