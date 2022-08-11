@@ -11,6 +11,8 @@ import {
 } from "../generated/Seaport/Seaport";
 
 export function handleOrderFulfilled(event: OrderFulfilled): void {
+    const blockTimestamp = event.block.timestamp.toI32();
+
     let order = MatchedOrder.load(event.params.orderHash.toHex());
     if (!order) {
         order = new MatchedOrder(event.params.orderHash.toHex());
@@ -18,6 +20,8 @@ export function handleOrderFulfilled(event: OrderFulfilled): void {
 
     order.transactionHash = event.transaction.hash;
     order.transactionFromAddress = event.transaction.from;
+    order.timestamp = blockTimestamp;
+
     order.offererAddress = event.params.offerer;
     order.zoneAddress = event.params.zone;
     order.recipientAddress = event.params.recipient;
@@ -36,6 +40,7 @@ export function handleOrderFulfilled(event: OrderFulfilled): void {
         }
 
         offer.order = orderId;
+        offer.timestamp = blockTimestamp;
         offer.itemType = offerData.itemType;
         offer.tokenAddress = offerData.token;
         offer.identifier = offerData.identifier;
@@ -55,6 +60,7 @@ export function handleOrderFulfilled(event: OrderFulfilled): void {
         }
 
         consideration.order = orderId;
+        consideration.timestamp = blockTimestamp;
         consideration.itemType = considerationData.itemType;
         consideration.tokenAddress = considerationData.token;
         consideration.identifier = considerationData.identifier;
@@ -66,7 +72,7 @@ export function handleOrderFulfilled(event: OrderFulfilled): void {
 }
 
 export function handleOrderValidated(event: OrderValidated): void {
-    let seaport = Seaport.bind(event.address);
+    const seaport = Seaport.bind(event.address);
 
     let order = NewOrder.load(event.params.orderHash.toHex());
     if (!order) {
@@ -79,5 +85,6 @@ export function handleOrderValidated(event: OrderValidated): void {
     order.zoneAddress = event.params.zone;
     order.address = seaport._address;
     order.name = seaport._name;
+
     order.save();
 }

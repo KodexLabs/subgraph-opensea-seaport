@@ -2,6 +2,7 @@ type MatchedOrder @entity {
     id: ID!
     transactionHash: Bytes!
     transactionFromAddress: Bytes!
+    timestamp: Int!
     offererAddress: Bytes!
     zoneAddress: Bytes!
     recipientAddress: Bytes!
@@ -11,6 +12,7 @@ type MatchedOrder @entity {
 
 type Offer @entity {
     id: ID!
+    timestamp: Int!
     order: MatchedOrder!
     itemType: Int!
     tokenAddress: Bytes!
@@ -20,6 +22,7 @@ type Offer @entity {
 
 type Consideration @entity {
     id: ID!
+    timestamp: Int!
     order: MatchedOrder!
     itemType: Int!
     tokenAddress: Bytes!
