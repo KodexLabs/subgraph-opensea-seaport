@@ -22,10 +22,6 @@ dataSources:
         - name: Seaport
           file: ./abis/Seaport.json
       eventHandlers:
-        - event: CounterIncremented(uint256,indexed address)
-          handler: handleCounterIncremented
-        - event: OrderCancelled(bytes32,indexed address,indexed address)
-          handler: handleOrderCancelled
         - event: OrderFulfilled(bytes32,indexed address,indexed
             address,address,(uint8,address,uint256,uint256)[],(uint8,address,uint256,uint256,address)[])
           handler: handleOrderFulfilled

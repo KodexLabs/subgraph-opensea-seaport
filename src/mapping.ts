@@ -5,16 +5,10 @@ import {
     Offer
 } from "../generated/schema";
 import {
-    CounterIncremented,
-    OrderCancelled,
     OrderFulfilled,
     OrderValidated,
     Seaport
 } from "../generated/Seaport/Seaport";
-
-export function handleCounterIncremented(event: CounterIncremented): void {}
-
-export function handleOrderCancelled(event: OrderCancelled): void {}
 
 export function handleOrderFulfilled(event: OrderFulfilled): void {
     let order = MatchedOrder.load(event.params.orderHash.toHex());
@@ -31,38 +25,42 @@ export function handleOrderFulfilled(event: OrderFulfilled): void {
 
     const orderId = order.id;
 
-    if (event.params.offer.length != 0) {
-        const data = event.params.offer[0];
-        const id = `${data.token.toHex()}_${data.identifier.toString()}`;
+    const offers = event.params.offer;
+    for (let i: i32 = 0; i < offers.length; i++) {
+        const offerData = offers[i];
+        const offerId = `${orderId}-${offerData.token.toHex()}-${offerData.identifier.toString()}`;
 
-        let offer = Offer.load(id);
+        let offer = Offer.load(offerId);
         if (!offer) {
-            offer = new Offer(id);
+            offer = new Offer(offerId);
         }
 
         offer.order = orderId;
-        offer.itemType = data.itemType;
-        offer.tokenAddress = data.token;
-        offer.identifier = data.identifier;
-        offer.amount = data.amount;
+        offer.itemType = offerData.itemType;
+        offer.tokenAddress = offerData.token;
+        offer.identifier = offerData.identifier;
+        offer.amount = offerData.amount;
+
         offer.save();
     }
 
-    if (event.params.consideration.length != 0) {
-        const data = event.params.consideration[0];
-        const id = `${data.token.toHex()}_${data.identifier.toString()}`;
+    const considerations = event.params.consideration;
+    for (let i: i32 = 0; i < considerations.length; i++) {
+        const considerationData = considerations[i];
+        const onsiderationId = `${orderId}-${considerationData.token.toHex()}-${considerationData.identifier.toString()}`;
 
-        let consideration = Consideration.load(id);
+        let consideration = Consideration.load(onsiderationId);
         if (!consideration) {
-            consideration = new Consideration(id);
+            consideration = new Consideration(onsiderationId);
         }
 
         consideration.order = orderId;
-        consideration.itemType = data.itemType;
-        consideration.tokenAddress = data.token;
-        consideration.identifier = data.identifier;
-        consideration.amount = data.amount;
-        consideration.recipientAddress = data.recipient;
+        consideration.itemType = considerationData.itemType;
+        consideration.tokenAddress = considerationData.token;
+        consideration.identifier = considerationData.identifier;
+        consideration.amount = considerationData.amount;
+        consideration.recipientAddress = considerationData.recipient;
+
         consideration.save();
     }
 }
