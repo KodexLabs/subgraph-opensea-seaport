@@ -18,6 +18,8 @@ type Offer @entity {
     tokenAddress: Bytes!
     identifier: BigInt!
     amount: BigInt!
+
+    offererAddress: Bytes!
 }
 
 type Consideration @entity {
@@ -28,7 +30,9 @@ type Consideration @entity {
     tokenAddress: Bytes!
     identifier: BigInt!
     amount: BigInt!
+
     recipientAddress: Bytes!
+    offererAddress: Bytes!
 }
 
 type NewOrder @entity {

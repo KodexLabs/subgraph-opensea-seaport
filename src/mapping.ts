@@ -46,6 +46,8 @@ export function handleOrderFulfilled(event: OrderFulfilled): void {
         offer.identifier = offerData.identifier;
         offer.amount = offerData.amount;
 
+        offer.offererAddress = event.params.offerer;
+
         offer.save();
     }
 
@@ -66,6 +68,8 @@ export function handleOrderFulfilled(event: OrderFulfilled): void {
         consideration.identifier = considerationData.identifier;
         consideration.amount = considerationData.amount;
         consideration.recipientAddress = considerationData.recipient;
+
+        consideration.offererAddress = event.params.offerer;
 
         consideration.save();
     }
